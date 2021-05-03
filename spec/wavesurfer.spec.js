@@ -5,16 +5,16 @@ import WaveSurfer from '../src/wavesurfer.js';
 
 /** @test {WaveSurfer} */
 describe('WaveSurfer/playback:', function() {
-    var wavesurfer;
-    var element;
-    var manualDestroy = false;
+    let wavesurfer;
+    let element;
+    let manualDestroy = false;
 
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
     beforeEach(function(done) {
         manualDestroy = false;
 
-        var wave = TestHelpers.createWaveform();
+        let wave = TestHelpers.createWaveform();
         wavesurfer = wave[0];
         element = wave[1];
         wavesurfer.load(TestHelpers.EXAMPLE_FILE_PATH);
@@ -251,7 +251,7 @@ describe('WaveSurfer/playback:', function() {
 
     /** @test {WaveSurfer#getWaveColor} */
     it('allow getting waveColor', function() {
-        var waveColor = wavesurfer.getWaveColor();
+        const waveColor = wavesurfer.getWaveColor();
         expect(waveColor).toEqual('#90F09B');
     });
 
@@ -259,86 +259,99 @@ describe('WaveSurfer/playback:', function() {
     it('allow setting waveColor', function() {
         let color = 'blue';
         wavesurfer.setWaveColor(color);
-        var waveColor = wavesurfer.getWaveColor();
+        const waveColor = wavesurfer.getWaveColor();
 
         expect(waveColor).toEqual(color);
     });
 
     /** @test {WaveSurfer#getProgressColor} */
     it('allow getting progressColor', function() {
-        var progressColor = wavesurfer.getProgressColor();
+        const progressColor = wavesurfer.getProgressColor();
         expect(progressColor).toEqual('purple');
     });
 
     /** @test {WaveSurfer#setProgressColor} */
     it('allow setting progressColor', function() {
         wavesurfer.setProgressColor('green');
-        var progressColor = wavesurfer.getProgressColor();
+        const progressColor = wavesurfer.getProgressColor();
 
         expect(progressColor).toEqual('green');
     });
 
     /** @test {WaveSurfer#getCursorColor} */
     it('allow getting cursorColor', function() {
-        var cursorColor = wavesurfer.getCursorColor();
+        const cursorColor = wavesurfer.getCursorColor();
         expect(cursorColor).toEqual('white');
     });
 
     /** @test {WaveSurfer#setCursorColor} */
     it('allow setting cursorColor', function() {
         wavesurfer.setCursorColor('black');
-        var cursorColor = wavesurfer.getCursorColor();
+        const cursorColor = wavesurfer.getCursorColor();
 
         expect(cursorColor).toEqual('black');
     });
 
     /** @test {WaveSurfer#getBackgroundColor} */
     it('allow getting backgroundColor', function() {
-        var bgColor = wavesurfer.getBackgroundColor();
+        const bgColor = wavesurfer.getBackgroundColor();
         expect(bgColor).toEqual(null);
     });
 
     /** @test {WaveSurfer#setBackgroundColor} */
     it('allow setting backgroundColor', function() {
         wavesurfer.setBackgroundColor('#FFFF00');
-        var bgColor = wavesurfer.getBackgroundColor();
+        const bgColor = wavesurfer.getBackgroundColor();
 
         expect(bgColor).toEqual('#FFFF00');
     });
 
     /** @test {WaveSurfer#getHeight} */
     it('allow getting height', function() {
-        var height = wavesurfer.getHeight();
+        const height = wavesurfer.getHeight();
         expect(height).toEqual(128);
     });
 
     /** @test {WaveSurfer#setHeight} */
     it('allow setting height', function() {
         wavesurfer.setHeight(150);
-        var height = wavesurfer.getHeight();
+        const height = wavesurfer.getHeight();
 
         expect(height).toEqual(150);
     });
 
     /** @test {WaveSurfer#exportPCM} */
-    it('return Promise with PCM data formatted using JSON.stringify', function(done) {
-        wavesurfer.exportPCM().then(pcmData => {
-            expect(pcmData).toBeNonEmptyString();
+    it('return Promise with PCM array data', function(done) {
+        wavesurfer.load(TestHelpers.EXAMPLE_FILE_PATH);
+        wavesurfer.once('ready', function() {
+            wavesurfer.exportPCM(1024, 10000, false, 0, 100).then(pcmData => {
+                expect(pcmData instanceof Array).toBeTruthy();
 
-            done();
+                done();
+            });
+        });
+    });
+    it('return Promise with PCM array data in new window', function(done) {
+        wavesurfer.load(TestHelpers.EXAMPLE_FILE_PATH);
+        wavesurfer.once('ready', function() {
+            wavesurfer.exportPCM(1024, 10000, true, 0, 100).then(pcmData => {
+                expect(pcmData instanceof Array).toBeTruthy();
+
+                done();
+            });
         });
     });
 
     /** @test {WaveSurfer#getFilters} */
     it('return the list of current set filters as an array', function() {
-        var list = wavesurfer.getFilters();
+        const list = wavesurfer.getFilters();
 
         expect(list).toEqual([]);
     });
 
     /** @test {WaveSurfer#exportImage} */
     it('export image data', function() {
-        var imgData = wavesurfer.exportImage();
+        const imgData = wavesurfer.exportImage();
         expect(imgData).toBeNonEmptyString();
 
         wavesurfer.exportImage('image/png', 1, 'blob').then(blobs => {
@@ -356,11 +369,13 @@ describe('WaveSurfer/playback:', function() {
             done();
         });
         wavesurfer.destroy();
+
+        expect(wavesurfer.backend).toBeNull();
     });
 
     describe('seek event emission', function() {
-        var seekEventSpy;
-        var interactionEventSpy;
+        let seekEventSpy;
+        let interactionEventSpy;
 
         beforeEach(function() {
             seekEventSpy = jasmine.createSpy();
@@ -407,7 +422,7 @@ describe('WaveSurfer/playback:', function() {
 
 /** @test {WaveSurfer} */
 describe('WaveSurfer/errors:', function() {
-    var element;
+    let element;
 
     beforeEach(function() {
         element = TestHelpers.createElement('test');
@@ -476,7 +491,7 @@ describe('WaveSurfer/errors:', function() {
      */
     it('not throw when rendered and media is not loaded', function() {
         expect(function() {
-            var wave = TestHelpers.createWaveform({
+            let wave = TestHelpers.createWaveform({
                 container: '#test'
             });
 
@@ -488,10 +503,10 @@ describe('WaveSurfer/errors:', function() {
      * @test {WaveSurfer#load}
      */
     it('throw when url parameter for load is empty', function() {
-        var wave = TestHelpers.createWaveform({
+        let wave = TestHelpers.createWaveform({
             container: '#test'
         });
-        var expectedError = new Error('url parameter cannot be empty');
+        const expectedError = new Error('url parameter cannot be empty');
 
         // undefined url
         expect(function() {

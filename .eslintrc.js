@@ -7,6 +7,8 @@ module.exports = {
         Float32Array: true,
         Uint32Array: true,
         Promise: true,
+        Proxy: true,
+        Symbol: true,
         Uint8Array: true,
         ArrayBuffer: true,
         __VERSION__: true
@@ -18,19 +20,29 @@ module.exports = {
     rules: {
         eqeqeq: 'off',
         'semi': 2,
+        'curly': "error",
         "indent": ["error", 4, {
             "ignoredNodes": ["TemplateLiteral"],
             "SwitchCase": 1
         }],
         'comma-dangle': ["error", "never"],
+        'comma-spacing': ["error", { "before": false, "after": true }],
         'no-console': 1,
         'no-unused-vars': 'off',
+        'no-var': 'error',
         'no-unreachable': 2,
+        'no-extra-semi': "error",
+        'no-multi-spaces': "error",
+        'no-multiple-empty-lines': "error",
+        'space-infix-ops': "error",
         'valid-jsdoc': [2, {
             'requireReturn': false,
             'requireReturnType': false
         }],
+        'no-trailing-spaces': "error",
+        'no-dupe-keys': "error",
         'require-jsdoc': 2,
+        'no-duplicate-imports': "error",
         'space-before-function-paren': ["error", "never"],
         'keyword-spacing': ["error", {"before": true}]
     },
@@ -38,6 +50,7 @@ module.exports = {
     {
         'files': ['example/**/*.js', 'spec/**/*.js'],
         'rules': {
+            'no-var': 'off',
             'no-console': 'off',
             'require-jsdoc': 0,
             'valid-jsdoc': 0

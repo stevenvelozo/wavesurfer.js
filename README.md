@@ -12,7 +12,7 @@ See a [tutorial](https://wavesurfer-js.org/docs) and [examples](https://wavesurf
 ## Browser support
 wavesurfer.js works only in [modern browsers supporting Web Audio](http://caniuse.com/audio-api).
 
-It will fallback to Audio Element in other browsers (without graphics). You can also try [wavesurfer.swf](https://github.com/laurentvd/wavesurfer.swf) which is a Flash-based fallback.
+It will fallback to Audio Element without graphics in other browsers (IE 11 and lower). You can also try [wavesurfer.swf](https://github.com/laurentvd/wavesurfer.swf) which is a Flash-based fallback.
 
 ## FAQ
 ### Can the audio start playing before the waveform is drawn?
@@ -90,7 +90,7 @@ For a list of  projects using wavesurfer.js, check out
 
 ## Development
 
-[![Build Status](https://travis-ci.org/katspaugh/wavesurfer.js.svg?branch=master)](https://travis-ci.org/katspaugh/wavesurfer.js)
+[![Build Status](https://github.com/katspaugh/wavesurfer.js/workflows/wavesurfer.js/badge.svg?branch=master)](https://github.com/katspaugh/wavesurfer.js/actions?workflow=wavesurfer.js)
 [![Coverage Status](https://coveralls.io/repos/github/katspaugh/wavesurfer.js/badge.svg)](https://coveralls.io/github/katspaugh/wavesurfer.js)
 ![Size](https://img.shields.io/bundlephobia/minzip/wavesurfer.js.svg?style=flat)
 
@@ -135,11 +135,14 @@ If you want to use [the VS Code - Debugger for Chrome](https://github.com/Micros
 ## Editing documentation
 The homepage and documentation files are maintained in the [`gh-pages` branch](https://github.com/katspaugh/wavesurfer.js/tree/gh-pages). Contributions to the documentation are especially welcome.
 
+## Updating the NPM package
+When preparing a new release, update the version in the `package.json` and have it merged to master. The new version of the package will be published to NPM automatically via GitHub Actions.
+
 ## Credits
 
-Initial idea by [Alex Khokhulin](https://github.com/xoxulin). Many
-thanks to
-[the awesome contributors](https://github.com/katspaugh/wavesurfer.js/contributors)!
+The main maintainer: <img src="https://avatars.githubusercontent.com/u/305679" width="16" height="16" /> [Thijs Triemstra](https://github.com/thijstriemstra)
+
+Many thanks to [all the awesome contributors](https://github.com/katspaugh/wavesurfer.js/contributors)!
 
 ## License
 
